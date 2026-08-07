@@ -7,7 +7,9 @@ authors = [
     { name = "dmzjb", email = "kubadomowicz2@wp.pl" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "typer>=0.27.1",
+]
 
 [project.scripts]
 cli-task-manager = "cli_task_manager:main"
@@ -18,5 +20,9 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
+    "pytest>=9.1.1",
     "ruff>=0.16.1",
 ]
+
+[tool.pyright]
+typeCheckingMode = 'strict'

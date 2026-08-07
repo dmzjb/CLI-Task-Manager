@@ -1,2 +1,7 @@
-def main() -> None:
-    print("Hello from cli-task-manager!")
+from .models import Status, Priority, Task
+
+__all__=[
+    "Status",
+    "Priority",
+    "Task"
+]
