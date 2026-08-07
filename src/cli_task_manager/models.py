@@ -1,7 +1,5 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import StrEnum
-from datetime import datetime
-import itertools
 
 class Status(StrEnum):
     DONE = "done"
@@ -15,12 +13,9 @@ class Priority(StrEnum):
 
 @dataclass
 class Task:
+    id :int
     name: str
     priority: Priority
-    due_date: datetime
-    status: Status
-    id: int = field(default_factory=lambda: next(Task.id_iter))
-
-    id_iter = itertools.count()
-
+    due_date: str
+    status: Status = Status.PENDING
 
