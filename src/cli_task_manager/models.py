@@ -4,7 +4,7 @@ from enum import StrEnum
 class Status(StrEnum):
     DONE = "done"
     IN_PROGRESS = "in_progress"
-    PENDING = "pending"
+    TODO = "to do"
 
 class Priority(StrEnum):
     HIGH = "high"
@@ -17,5 +17,5 @@ class Task:
     name: str
     priority: Priority
     due_date: str
-    status: Status = Status.PENDING
-
+    status: Status = Status.TODO
+    

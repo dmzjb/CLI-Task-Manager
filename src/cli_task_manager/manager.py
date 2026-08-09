@@ -1,4 +1,5 @@
 from cli_task_manager.models import Status, Priority, Task
+from cli_task_manager.exceptions import TaskNotFoundError
 import itertools
 import json
 from dataclasses import asdict
@@ -34,18 +35,15 @@ class TaskManager:
             self.tasks.append(task)
 
     def save_task_to_json(self) -> None:
-       data_to_save: list[dict[str, str]] = []
-       for task in self.tasks:
+        data_to_save: list[dict[str, str]] = []
+        for task in self.tasks:
            data_to_save.append(asdict(task))
 
-       with self.file_path.open("w",encoding="utf-8"):
-           json.dumps(data_to_save, indent=4, ensure_ascii=False)
+        with self.file_path.open("w", encoding="utf-8") as file:
+            json.dump(data_to_save, file, indent=4, ensure_ascii=False)
 
     def add_task(self, name: str, prior: Priority, due: str) -> Task:
-        if not self.tasks:
-            task_id = 1
-        else: 
-            task_id = next(id_iter)
+        task_id = max((task.id for task in self.tasks), default=0) + 1
 
         task = Task(
             id=task_id,
@@ -55,5 +53,13 @@ class TaskManager:
             status=Status.TODO,
         )
         self.tasks.append(task)
-        self.save_task_to_json
+        self.save_task_to_json()
         return task
+
+    def change_status(self, task_id: int, status: Status) -> None:
+        for task in self.tasks:
+            if task.id == task_id:
+                task.status = status
+                self.save_task_to_json()
+                return
+        raise TaskNotFoundError(f"Zadanie {task_id} nie istnieje")
