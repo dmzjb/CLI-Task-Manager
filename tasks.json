@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "name": "Nauka Pytest",
+        "priority": "high",
+        "due_date": "2026-12-31",
+        "status": "to do"
+    },
+    {
+        "id": 2,
+        "name": "Nauka skibidibi",
+        "priority": "high",
+        "due_date": "2026-08-31",
+        "status": "to do"
+    }
+]
