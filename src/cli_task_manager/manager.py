@@ -1,6 +1,7 @@
 from cli_task_manager.models import Status, Priority, Task
 import itertools
 import json
+from dataclasses import asdict
 from pathlib import Path
 
 
@@ -33,13 +34,26 @@ class TaskManager:
             self.tasks.append(task)
 
     def save_task_to_json(self) -> None:
-       pass
+       data_to_save: list[dict[str, str]] = []
+       for task in self.tasks:
+           data_to_save.append(asdict(task))
+
+       with self.file_path.open("w",encoding="utf-8"):
+           json.dumps(data_to_save, indent=4, ensure_ascii=False)
 
     def add_task(self, name: str, prior: Priority, due: str) -> Task:
-        task_id = next(id_iter)
-        return Task(
-            task_id,
-            name,
-            prior,
-            due,
+        if not self.tasks:
+            task_id = 1
+        else: 
+            task_id = next(id_iter)
+
+        task = Task(
+            id=task_id,
+            name=name,
+            priority=prior,
+            due_date=due,
+            status=Status.TODO,
         )
+        self.tasks.append(task)
+        self.save_task_to_json
+        return task
