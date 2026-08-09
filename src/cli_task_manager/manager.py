@@ -1,12 +1,9 @@
 from cli_task_manager.models import Status, Priority, Task
 from cli_task_manager.exceptions import TaskNotFoundError
-import itertools
 import json
+from typing import Any
 from dataclasses import asdict
 from pathlib import Path
-
-
-id_iter = itertools.count()
 
 class TaskManager:
     def __init__(self, file_path: str | Path):
@@ -28,14 +25,14 @@ class TaskManager:
             task = Task(
                 id=item["id"],
                 name=item["name"],
-                priority=item["priority"],
+                priority=Priority(item["priority"]),
                 due_date=item["due_date"],
-                status= item["status"]
+                status= Status(item["status"])
             )
             self.tasks.append(task)
 
     def save_task_to_json(self) -> None:
-        data_to_save: list[dict[str, str]] = []
+        data_to_save: list[dict[str, Any]] = []
         for task in self.tasks:
            data_to_save.append(asdict(task))
 
