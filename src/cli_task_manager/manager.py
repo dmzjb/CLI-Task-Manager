@@ -63,3 +63,12 @@ class TaskManager:
                 self.save_task_to_json()
                 return
         raise TaskNotFoundError(f"Zadanie {task_id} nie istnieje")
+
+    def delete_task(self, task_id: int) -> None:
+        for task in self.tasks:
+            if task.id == task_id:
+                self.tasks.remove(task)
+                self.save_task_to_json()
+                return
+        raise TaskNotFoundError(f"Zadanie {task_id} nie istnieje")
+    
