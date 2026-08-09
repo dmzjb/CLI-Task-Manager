@@ -1,9 +1,4 @@
-from .models import Status, Priority, Task
 from .exceptions import TaskNotFoundError
+from .models import Priority, Status, Task
 
-__all__=[
-    "Status",
-    "Priority",
-    "Task",
-    "TaskNotFoundError"
-]
+__all__ = ["Priority", "Status", "Task", "TaskNotFoundError"]
